@@ -59,6 +59,9 @@ else:
 
 #Video fetching loop
 videos = list(INPUT.glob("*.MOV")) + list(INPUT.glob("*.mov"))
+
+processed_datasets = []
+
 for video in videos:
 
         name = video.stem
@@ -233,13 +236,22 @@ for video in videos:
                 str(output) + "/"
         ])
 
+        processed_datasets.append((dataset, images))
+
+        print(GREEN + f"\nFinished Processing: {name}" +RESET)    
+
+
+if processed_datasets:
         CLR_DATA = input(GREEN + "Do you want to clear local cache? (y/n):" + RESET).lower() == "y"
 
         if CLR_DATA:
+           for dataset, images in processed_datasets:
                 shutil.rmtree(dataset, ignore_errors=True)
                 shutil.rmtree(images, ignore_errors=True)
+                print(YELLOW + "Local cache removed from the disk" + RESET)
         else:
                 print(YELLOW + "Clearing cache skipped" + RESET)
-
-        print(GREEN + f"\nFinished Processing: {name}" +RESET)                    
+else:
+   print(RED+ "No videos were successfully processed!" + RESET)
+                        
 
