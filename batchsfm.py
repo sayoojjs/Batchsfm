@@ -45,17 +45,16 @@ if TRAINASK:
         GS_ITERATIONS = int(input(YELLOW + "How many iterations (5000/15000/30000):"))
         GS_RESOLUTION = int(input("Choose the downscale factor (1/2/../8/9/):")) 
         GS_DENSEITR = int(input("How many iteration you need until densification stops(5000/15000/30000):"))  
-        GS_SH = input("Enable Spherical Harmonics ? (y/n):" + RESET).strip().lower() == "y"   
+        GS_SH = input("Enable Spherical Harmonics ? (y/n):" + RESET).strip().lower() == "y"
+        if GS_SH:
+              GS_SH_SET = 1
+        else:
+              GS_SH_SET = 0
 else:
         print(YELLOW + "Training skipped!" + RESET)
+        GS_SH_SET = 0 
 
 MAX_IMG_SIZE = max(IMG_WIDTH, IMG_HEIGHT)
-
-
-if GS_SH:
-        GS_SH_SET = 1
-else:
-        GS_SH_SET = 0
 
 #Video fetching loop
 videos = list(INPUT.glob("*.MOV")) + list(INPUT.glob("*.mov"))
